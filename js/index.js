@@ -19,6 +19,32 @@ let round = 0;
 let results = [];
 let timerInterval;
 
+const rulesModal = document.getElementById("rulesModal");
+const closeRulesBtn = document.getElementById("closeRulesBtn");
+
+// Aratam modalul la inceput
+rulesModal.classList.remove("hidden");
+
+// Cand userul da click pe "Got it"
+closeRulesBtn.addEventListener("click", () => {
+  rulesModal.classList.add("hidden");
+  // Ascundem control panelul initial si pornim jocul la click pe Start
+  document.querySelector(".flex.flex-col.gap-4").style.display = "flex";
+});
+
+const showRulesBtn = document.getElementById("showRulesBtn");
+
+const rulesIconBtn = document.getElementById("rulesIconBtn");
+
+// La click, arată modalul cu regulile
+rulesIconBtn.addEventListener("click", () => {
+  rulesModal.classList.remove("hidden");
+});
+
+closeRulesBtn.addEventListener("click", () => {
+  rulesModal.classList.add("hidden");
+});
+
 // ---------------- Start game ----------------
 const controlPanel = document.getElementById("controlPanel");
 
@@ -60,7 +86,7 @@ function playSequence(seq) {
       }
       showBigShape(seq[i].shape, seq[i].color);
       i++;
-      setTimeout(step, 10);
+      setTimeout(step, 2500);
     }
     step();
   });

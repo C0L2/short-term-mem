@@ -135,21 +135,26 @@
       function createShapeSVG(shape, color, size = 250) {
         const center = size / 2;
         const r = Math.min(100, size * 0.35);
+        let strokeColor = color === "yellow" ? "gray" : color;
+        let strokeWidth = color === "yellow" ? 2 : 4; // subțire pentru galben
         let inner = "";
+
         if (shape === "square") {
           const s = r * 1.4;
           inner = `<rect x="${center - s / 2}" y="${
             center - s / 2
-          }" width="${s}" height="${s}" rx="12" fill="${color}" stroke="${color}" stroke-width="4"/>`;
+          }" width="${s}" height="${s}" rx="12" fill="${color}" stroke="${strokeColor}" stroke-width="${strokeWidth}"/>`;
         } else if (shape === "ring") {
-          inner = `<circle cx="${center}" cy="${center}" r="${r}" fill="none" stroke="${color}" stroke-width="16"/>`;
+          inner = `<circle cx="${center}" cy="${center}" r="${r}" fill="none" stroke="${strokeColor}" stroke-width="${
+            strokeWidth * 4
+          }"/>`;
         } else if (shape === "circle") {
-          inner = `<circle cx="${center}" cy="${center}" r="${r}" fill="${color}" stroke="${color}" stroke-width="4"/>`;
+          inner = `<circle cx="${center}" cy="${center}" r="${r}" fill="${color}" stroke="${strokeColor}" stroke-width="${strokeWidth}"/>`;
         } else if (shape === "triangle") {
           const p1 = `${center},${center - r}`;
           const p2 = `${center - r},${center + r}`;
           const p3 = `${center + r},${center + r}`;
-          inner = `<polygon points="${p1} ${p2} ${p3}" fill="${color}" stroke="${color}" stroke-width="4"/>`;
+          inner = `<polygon points="${p1} ${p2} ${p3}" fill="${color}" stroke="${strokeColor}" stroke-width="${strokeWidth}"/>`;
         } else if (shape === "star") {
           const points = [];
           for (let i = 0; i < 5; i++) {
@@ -164,8 +169,11 @@
           }
           inner = `<polygon points="${points.join(
             " "
-          )}" fill="${color}" stroke="${color}" stroke-width="3"/>`;
+          )}" fill="${color}" stroke="${strokeColor}" stroke-width="${
+            strokeWidth * 0.75
+          }"/>`;
         }
+
         const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='${size}' height='${size}' viewBox='0 0 ${size} ${size}'>${inner}</svg>`;
         return "data:image/svg+xml;utf8," + encodeURIComponent(svg);
       }

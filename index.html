@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Short Term Memory Game</title>
+    <title>Short Term Memory Trainer</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="icon" href="images/icon.png" />
     <style>
@@ -50,16 +50,20 @@
     <!-- Sidebar -->
     <aside class="w-64 p-6 bg-white shadow-lg rounded-3xl h-full fixed">
       <h2 class="font-bold text-2xl mb-4 text-indigo-600">Game Instructions</h2>
-      <p class="mb-2">Press <strong>Start</strong> to begin a 4-round game.</p>
-      <p class="mb-2">
-        You will see a sequence of colored geometric shapes at the start of each
-        round.
-      </p>
-      <p class="mb-4">
-        After the display, select the last N shapes in
-        <strong>reverse order</strong>.
-      </p>
-      <p id="statusLabel" class="mt-2 font-medium text-indigo-500"></p>
+      <div id="initialRulesBox">
+        <p class="mb-2">
+          Press <strong>Start</strong> to begin a 4-round game.
+        </p>
+        <p class="mb-2">
+          You will see a sequence of colored geometric shapes at the start of
+          each round.
+        </p>
+        <p class="mb-4">
+          After the display, select the last <strong>X</strong> shapes in
+          <strong>reverse order</strong>.
+        </p>
+      </div>
+      <p id="statusLabel" class="mt-2 font-medium"></p>
     </aside>
 
     <!-- Main game area -->
@@ -83,6 +87,11 @@
         id="displayArea"
         class="flex items-center justify-center bg-white shadow-lg rounded-3xl h-64 border border-gray-200 mt-3"
       >
+        <div id="initialMessageBox" class="m-40">
+          This game aims to test and improve user's
+          <strong class="text-indigo-700"> short-term</strong> memory by
+          recalling sequences of colored geometric shapes in order.
+        </div>
         <div id="bigShapeContainer"></div>
       </div>
 
@@ -218,6 +227,17 @@
         round = 0;
         results = [];
         startBtn.style.display = "none"; // hide start button during game
+
+        const initialBox = document.getElementById("initialMessageBox");
+        if (initialBox) initialBox.style.display = "none";
+
+        const statusDiv = document.getElementById("initialRulesBox");
+        if (statusDiv) {
+          statusDiv.style.display = "none";
+        }
+
+        statusLabel.textContent = "Memorize the sequence of shapes displayed!";
+
         nextRound();
       }
 
@@ -233,7 +253,7 @@
 
         statusLabel.textContent = `Round ${
           round + 1
-        }: Memorize the shapes displayed.`;
+        }: Memorize the sequence of shapes displayed.`;
 
         // Generate a random number of shapes between 10-19
         const seqLen = Math.floor(Math.random() * (19 - 10 + 1)) + 10;

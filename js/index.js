@@ -20,11 +20,17 @@ let results = [];
 let timerInterval;
 
 // ---------------- Start game ----------------
+const controlPanel = document.getElementById("controlPanel");
+
 startBtn.addEventListener("click", () => {
   SELECT_TIME = parseInt(timeSelector.value, 10);
   round = 0;
   results = [];
   initialMessageBox.style.display = "none";
+
+  // Ascundem panoul de control
+  controlPanel.style.display = "none";
+
   nextRound();
 });
 

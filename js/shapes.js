@@ -1,24 +1,26 @@
-function createShapeSVG(shape, color, size = 150) {
+function createShapeSVG(shape, color, size = 200) {
   const center = size / 2;
-  const r = Math.min(60, size * 0.35);
-  let strokeColor = color === "yellow" ? "gray" : color;
-  let strokeWidth = color === "yellow" ? 4 : 6;
+  const r = Math.min(100, size * 0.45);
+  let strokeColor = color;
+  let strokeWidth = shape === "ring" ? 12 : 6;
+  let fillColor = shape === "ring" ? "none" : color;
+
   let inner = "";
 
   if (shape === "square") {
     const s = r * 1.4;
     inner = `<rect x="${center - s / 2}" y="${
       center - s / 2
-    }" width="${s}" height="${s}" rx="12" fill="${color}" stroke="${strokeColor}" stroke-width="${strokeWidth}"/>`;
+    }" width="${s}" height="${s}" rx="12" fill="${fillColor}" stroke="${strokeColor}" stroke-width="${strokeWidth}"/>`;
   } else if (shape === "ring") {
     inner = `<circle cx="${center}" cy="${center}" r="${r}" fill="none" stroke="${strokeColor}" stroke-width="${strokeWidth}"/>`;
   } else if (shape === "circle") {
-    inner = `<circle cx="${center}" cy="${center}" r="${r}" fill="${color}" stroke="${strokeColor}" stroke-width="${strokeWidth}"/>`;
+    inner = `<circle cx="${center}" cy="${center}" r="${r}" fill="${fillColor}" stroke="${strokeColor}" stroke-width="${strokeWidth}"/>`;
   } else if (shape === "triangle") {
     const p1 = `${center},${center - r}`;
     const p2 = `${center - r},${center + r}`;
     const p3 = `${center + r},${center + r}`;
-    inner = `<polygon points="${p1} ${p2} ${p3}" fill="${color}" stroke="${strokeColor}" stroke-width="${strokeWidth}"/>`;
+    inner = `<polygon points="${p1} ${p2} ${p3}" fill="${fillColor}" stroke="${strokeColor}" stroke-width="${strokeWidth}"/>`;
   } else if (shape === "star") {
     const points = [];
     for (let i = 0; i < 5; i++) {
@@ -33,7 +35,7 @@ function createShapeSVG(shape, color, size = 150) {
     }
     inner = `<polygon points="${points.join(
       " "
-    )}" fill="${color}" stroke="${strokeColor}" stroke-width="${
+    )}" fill="${fillColor}" stroke="${strokeColor}" stroke-width="${
       strokeWidth * 0.75
     }"/>`;
   }

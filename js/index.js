@@ -86,7 +86,7 @@ function playSequence(seq) {
       }
       showBigShape(seq[i].shape, seq[i].color);
       i++;
-      setTimeout(step, 2500);
+      setTimeout(step, 1000);
     }
     step();
   });

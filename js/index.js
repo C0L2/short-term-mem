@@ -184,27 +184,29 @@ function nextRound() {
     function submitAnswers(expired) {
       const selects = document.querySelectorAll("#selectsContainer select");
 
-      // Resetăm mesajele
-      selects.forEach((sel) => {
-        const msg = sel.nextElementSibling;
-        if (msg && msg.classList.contains("msg-label")) msg.textContent = "";
-      });
-
       let incomplete = false;
+
       selects.forEach((s) => {
+        // Caută sau creează mesajul lângă selector
+        let msg = s.parentNode.querySelector(".msg-label");
+        if (!msg) {
+          msg = document.createElement("span");
+          msg.className = "msg-label text-red-500 text-xs mt-1";
+          s.parentNode.appendChild(msg);
+        }
+        msg.textContent = ""; // resetează mesajul
+        s.classList.remove("border-red-700", "animate-ping");
+
         if (!s.value) {
           incomplete = true;
-          let msg = s.nextElementSibling;
-          if (!msg || !msg.classList.contains("msg-label")) {
-            msg = document.createElement("span");
-            msg.className = "msg-label text-red-500 text-xs mt-1";
-            s.parentNode.appendChild(msg);
-          }
           msg.textContent = "Please select a value!";
+          s.classList.add("border-red-500", "animate-pulse"); // stilizare warning
+        } else {
+          s.classList.remove("border-red-500", "animate-pulse"); // reset dacă completat
         }
       });
 
-      if (!expired && incomplete) return; // nu oprim timerul, doar afișăm mesajul
+      if (!expired && incomplete) return; // nu opri timerul, doar afișează mesajul
 
       clearInterval(timerInterval);
 

@@ -46,84 +46,81 @@
       }
     </style>
   </head>
-  <body class="bg-gray-100 font-sans">
-    <!-- Sidebar instructions always visible -->
-    <div
-      id="instructions"
-      class="p-4 bg-yellow-50 border border-yellow-200 rounded m-4 h-full"
-    >
-      <h2 class="font-semibold text-lg mb-2">Game Instructions</h2>
-      <p>Press <strong>Start</strong> to begin a 4-round game.</p>
-      <p>
-        At the start of each round, you will see a sequence of colored geometric
-        shapes.
+  <body class="bg-gray-100 font-sans mt-3 mb-3">
+    <!-- Sidebar -->
+    <aside class="w-64 p-6 bg-white shadow-lg rounded-3xl h-full fixed">
+      <h2 class="font-bold text-2xl mb-4 text-indigo-600">Game Instructions</h2>
+      <p class="mb-2">Press <strong>Start</strong> to begin a 4-round game.</p>
+      <p class="mb-2">
+        You will see a sequence of colored geometric shapes at the start of each
+        round.
       </p>
-      <p>
+      <p class="mb-4">
         After the display, select the last N shapes in
         <strong>reverse order</strong>.
       </p>
-      <p id="statusLabel" class="mt-2 font-medium text-blue-600"></p>
-    </div>
+      <p id="statusLabel" class="mt-2 font-medium text-indigo-500"></p>
+    </aside>
 
     <!-- Main game area -->
-    <div id="gameArea">
+    <main class="ml-64 p-8 w-full mt-3 mb-3">
       <!-- Start button and round info -->
-      <div class="flex items-center gap-6 mb-6">
+      <div class="flex items-center justify-between">
         <button
           id="startBtn"
-          class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+          class="px-6 py-3 bg-indigo-600 text-white font-semibold rounded-xl shadow hover:bg-indigo-700 transition"
         >
           Start
         </button>
-        <div id="roundInfo" class="ml-auto text-sm text-gray-600">
+        <div class="text-gray-700 font-medium text-lg justify-end">
           Round: <span id="roundNum">0</span>/4
-          <span id="timerLabel"></span>
+          <span id="timerLabel" class="ml-4 text-red-500 font-semibold"></span>
         </div>
       </div>
 
       <!-- Display area for shapes -->
       <div
         id="displayArea"
-        class="flex flex-col items-center justify-center bg-gray-50 border border-gray-200 rounded mb-6 h-64"
+        class="flex items-center justify-center bg-white shadow-lg rounded-3xl h-64 border border-gray-200 mt-3"
       >
         <div id="bigShapeContainer"></div>
       </div>
 
-      <!-- Selection area for user input -->
+      <!-- Selection area -->
       <div
         id="selectionArea"
-        class="hidden p-4 bg-white border rounded space-y-4 mb-6"
+        class="hidden bg-white shadow-md rounded-2xl p-6 flex flex-col gap-4"
       >
-        <h3 class="font-semibold">
+        <h3 class="text-xl font-semibold text-indigo-600">
           Select the last <span id="selectCount">N</span> shapes in reverse
           order
         </h3>
-        <form id="selectionForm" class="space-y-3">
+        <form id="selectionForm" class="flex flex-col gap-4">
           <div id="selectsContainer" class="flex flex-col gap-3"></div>
           <button
             type="submit"
-            class="px-4 py-2 bg-green-600 text-white rounded"
+            class="px-4 py-2 bg-green-500 text-white font-semibold rounded-xl shadow hover:bg-green-600 transition"
           >
             Submit
           </button>
         </form>
       </div>
 
-      <!-- Summary area at the end of game -->
+      <!-- Summary area -->
       <div
         id="summaryArea"
-        class="hidden p-4 bg-indigo-50 border rounded flex flex-col items-center justify-center"
+        class="hidden bg-indigo-50 shadow-lg rounded-3xl p-6 flex flex-col items-center gap-4"
       >
-        <h3 class="font-semibold text-lg mb-2">Final Results</h3>
-        <div id="summaryText" class="mb-4 text-center"></div>
+        <h3 class="font-bold text-2xl text-indigo-700">Final Results</h3>
+        <div id="summaryText" class="text-gray-800 text-center text-lg"></div>
         <button
           id="playAgainBtn"
-          class="px-3 py-2 bg-blue-600 text-white rounded"
+          class="px-5 py-2 bg-indigo-600 text-white font-semibold rounded-xl shadow hover:bg-indigo-700 transition"
         >
           Play Again
         </button>
       </div>
-    </div>
+    </main>
 
     <script>
       // ---------------- Constants and DOM references ----------------
@@ -155,7 +152,7 @@
         const center = size / 2;
         const r = Math.min(100, size * 0.35);
         let strokeColor = color === "yellow" ? "gray" : color; // yellow shapes get gray stroke
-        let strokeWidth = color === "yellow" ? 2 : 4; // thin for yellow
+        let strokeWidth = color === "yellow" ? 4 : 6; // thin for yellow
 
         let inner = "";
 
@@ -165,9 +162,9 @@
             center - s / 2
           }" width="${s}" height="${s}" rx="12" fill="${color}" stroke="${strokeColor}" stroke-width="${strokeWidth}"/>`;
         } else if (shape === "ring") {
-          inner = `<circle cx="${center}" cy="${center}" r="${r}" fill="none" stroke="${strokeColor}" stroke-width="${
-            strokeWidth * 4
-          }"/>`;
+          const ringStrokeWidth = color === "yellow" ? 4 : strokeWidth;
+          const ringStrokeColor = color === "yellow" ? "yellow" : strokeColor;
+          inner = `<circle cx="${center}" cy="${center}" r="${r}" fill="none" stroke="${ringStrokeColor}" stroke-width="${ringStrokeWidth}"/>`;
         } else if (shape === "circle") {
           inner = `<circle cx="${center}" cy="${center}" r="${r}" fill="${color}" stroke="${strokeColor}" stroke-width="${strokeWidth}"/>`;
         } else if (shape === "triangle") {

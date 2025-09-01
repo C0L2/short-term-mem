@@ -210,11 +210,21 @@
         // Generăm un număr aleatoriu de figuri între 10 și 19
         const seqLen = Math.floor(Math.random() * (19 - 10 + 1)) + 10;
         const seq = [];
+        let prev = null;
         for (let i = 0; i < seqLen; i++) {
-          seq.push({
-            color: COLORS[Math.floor(Math.random() * COLORS.length)],
-            shape: SHAPES[Math.floor(Math.random() * SHAPES.length)],
-          });
+          let next;
+          do {
+            next = {
+              color: COLORS[Math.floor(Math.random() * COLORS.length)],
+              shape: SHAPES[Math.floor(Math.random() * SHAPES.length)],
+            };
+          } while (
+            prev &&
+            next.color === prev.color &&
+            next.shape === prev.shape
+          );
+          seq.push(next);
+          prev = next;
         }
 
         await playSequence(seq);

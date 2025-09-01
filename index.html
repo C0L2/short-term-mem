@@ -48,7 +48,7 @@
   </head>
   <body class="bg-gray-100 font-sans mt-3 mb-3">
     <!-- Sidebar -->
-    <aside class="w-64 p-6 bg-white shadow-lg rounded-3xl h-full fixed">
+    <aside class="w-64 p-6 bg-white shadow-lg rounded-3xl h-[387px] fixed">
       <h2 class="font-bold text-2xl mb-4 text-indigo-600">Game Instructions</h2>
       <div id="initialRulesBox">
         <p class="mb-2">
@@ -85,7 +85,7 @@
       <!-- Display area for shapes -->
       <div
         id="displayArea"
-        class="flex items-center justify-center bg-white shadow-lg rounded-3xl h-64 border border-gray-200 mt-3"
+        class="flex items-center justify-center bg-white shadow-lg rounded-3xl h-[285px] border border-gray-200 mt-3"
       >
         <div id="initialMessageBox" class="m-40">
           This game aims to test and improve user's
@@ -234,6 +234,12 @@
         const statusDiv = document.getElementById("initialRulesBox");
         if (statusDiv) {
           statusDiv.style.display = "none";
+        }
+
+        const displayArea = document.getElementById("displayArea");
+        if (displayArea) {
+          displayArea.classList.remove("mt-3");
+          displayArea.classList.add("mt-8");
         }
 
         statusLabel.textContent = "Memorize the sequence of shapes displayed!";
